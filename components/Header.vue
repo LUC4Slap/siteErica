@@ -1,6 +1,6 @@
 <template>
   <header>
-    <h5>DOÇURAS DA ERICA</h5>
+    <h5>CHEIRINHO DE PÃO</h5>
   </header>
 </template>
 

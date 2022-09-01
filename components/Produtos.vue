@@ -1,20 +1,26 @@
 <template>
   <main class="principal">
     <section class="prod1">
-      <img src="../assets/pao.jpeg" alt="Pão caseiro" />
-      <p>Delicioso pão caseiro feito com ingrediente de primeira</p>
+      <NuxtLink to="/pedido">
+        <img src="../assets/pao.jpeg" alt="Pão caseiro" />
+        <p>Delicioso pão caseiro feito com ingrediente de primeira</p>
+      </NuxtLink>
     </section>
 
     <section class="prod2">
-      <div class="position">
-        <img src="../assets/cuca.jpeg" alt="Pão caseiro" />
-      </div>
-      <p>Deliciosa cuca caseira feito com ingrediente de primeira</p>
+      <NuxtLink to="/pedido">
+        <div class="position">
+          <img src="../assets/cuca.jpeg" alt="Pão caseiro" />
+        </div>
+        <p>Deliciosa cuca caseira feito com ingrediente de primeira</p>
+      </NuxtLink>
     </section>
 
     <section class="prod1">
-      <img src="../assets/rosca.jpeg" alt="Pão caseiro" />
-      <p>Deliciosa rosca caseira feito com ingrediente de primeira</p>
+      <NuxtLink to="/pedido">
+        <img src="../assets/rosca.jpeg" alt="Pão caseiro" />
+        <p>Deliciosa rosca caseira feito com ingrediente de primeira</p>
+      </NuxtLink>
     </section>
   </main>
 </template>
@@ -35,6 +41,12 @@ section {
     rgba(99, 49, 237, 0.61) 48.76%,
     #060399 100%
   );
+}
+
+a {
+  text-decoration: none;
+  color: #fff;
+  display: flex;
 }
 
 .alinhamento {
