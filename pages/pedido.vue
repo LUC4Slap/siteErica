@@ -2,7 +2,7 @@
   <div class="container mt-3">
     <b-alert variant="warning" show>
       Pedidos somente até as 09:30 posterior a este horário sera feita a entrega
-      no dia seguinte
+      no dia seguinte. Entregas após as 17:30.
     </b-alert>
     <b-form ref="form" @submit.prevent="onSubmit" @reset="onReset" v-if="show">
       <b-form-group id="input-group-1" label="Email" label-for="input-1">
