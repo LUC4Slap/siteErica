@@ -1,5 +1,9 @@
 <template>
   <div class="container mt-3">
+    <b-alert variant="warning" show>
+      Pedidos somente até as 09:30 posterior a este horário sera feita a entrega
+      no dia seguinte
+    </b-alert>
     <b-form ref="form" @submit.prevent="onSubmit" @reset="onReset" v-if="show">
       <b-form-group id="input-group-1" label="Email" label-for="input-1">
         <b-form-input
@@ -28,6 +32,8 @@
         <b-form-input
           id="input-2"
           v-model="form.phone"
+          mask="#####-####"
+          max="999999999"
           placeholder="Telefone"
           type="number"
           required
@@ -40,15 +46,31 @@
           v-model="form.food"
           :options="foods"
           required
+          multiple
+          :select-size="4"
         ></b-form-select>
       </b-form-group>
 
       <b-button type="submit" variant="primary">Enviar</b-button>
       <b-button type="reset" variant="danger">Limpar</b-button>
     </b-form>
-    <!-- <b-card class="mt-3" header="Form Data Result">
-      <pre class="m-0">{{ form }}</pre>
-    </b-card> -->
+    <div class="mt-4">
+      <b-alert
+        :show="dismissCountDown"
+        dismissible
+        :variant="error == true ? 'danger' : 'success'"
+        @dismissed="dismissCountDown = 0"
+        @dismiss-count-down="countDownChanged"
+      >
+        <p>{{ message }} {{ dismissCountDown }} segundos...</p>
+        <b-progress
+          variant="warning"
+          :max="dismissSecs"
+          :value="dismissCountDown"
+          height="4px"
+        ></b-progress>
+      </b-alert>
+    </div>
   </div>
 </template>
 
@@ -61,45 +83,61 @@ export default {
         email: "",
         name: "",
         phone: "",
-        food: null,
+        food: ["Pão"],
       },
-      foods: ["Pão", "Cuca", "Rosca"],
+      foods: [
+        "Pão",
+        "Cuca de Goiabada",
+        "Cuca de Banana",
+        "Cuca de Doce de Leite",
+        "Rosca",
+      ],
       show: true,
+      message: null,
+      dismissSecs: 10,
+      dismissCountDown: 0,
+      showDismissibleAlert: false,
+      error: false,
+      maxNumber: 10,
     };
   },
   methods: {
-    async onSubmit(event) {
-      let data = {
-        text: `
-          nome: ${this.form.name}
-          email: ${this.form.email}
-          telefone: ${this.form.phone}
-          pedido: ${this.form.food}
-        `,
-        to: "+5567992210409",
-        from: "Site",
+    async onSubmit() {
+      let pedido = {
+        nome: this.form.name,
+        email: this.form.email,
+        telefone: this.form.phone,
+        pedido: this.form.food,
       };
-      await axios.post(
-        "https://api.mailjet.com/v4/sms-send",
-        {
-          Authorization: "Bearer",
-          "Content-Type": "application/json",
-        },
-        data
+      let { data } = await axios.post(
+        "https://api-email-erica.herokuapp.com/send",
+        pedido
       );
+      // let { data } = await axios.post("http://localhost:3030/send", pedido);
+      if (data.hasOwnProperty("error") && data.erro == true) {
+        this.error = data.error;
+      }
+      this.message = data.message;
+      this.onReset();
+      this.showAlert();
     },
-    onReset(event) {
-      event.preventDefault();
+    onReset() {
       // Reset our form values
       this.form.email = "";
       this.form.name = "";
       this.form.phone = "";
-      this.form.food = null;
+      this.form.food = ["Pão"];
       // Trick to reset/clear native browser form validation state
       this.show = false;
       this.$nextTick(() => {
         this.show = true;
       });
+    },
+    countDownChanged(dismissCountDown) {
+      this.dismissCountDown = dismissCountDown;
+    },
+    showAlert() {
+      this.dismissCountDown = this.dismissSecs;
     },
   },
 };
