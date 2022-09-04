@@ -40,6 +40,15 @@
         ></b-form-input>
       </b-form-group>
 
+      <b-form-group id="input-group-2" label="Endereço:" label-for="input-2">
+        <b-form-input
+          id="input-2"
+          v-model="form.endereco"
+          placeholder="Seu Endereço"
+          required
+        ></b-form-input>
+      </b-form-group>
+
       <b-form-group id="input-group-4" label="Produtos" label-for="input-3">
         <b-form-select
           id="input-3"
@@ -83,6 +92,7 @@ export default {
         email: "",
         name: "",
         phone: "",
+        endereco: "",
         food: ["Pão"],
       },
       foods: [
@@ -108,9 +118,10 @@ export default {
         email: this.form.email,
         telefone: this.form.phone,
         pedido: this.form.food,
+        endereco: this.form.endereco,
       };
       let { data } = await axios.post(
-        "https://api-email-erica.herokuapp.com/send",
+        "https://api-email-nest.herokuapp.com/api/v1/email",
         pedido
       );
       // let { data } = await axios.post("http://localhost:3030/send", pedido);
