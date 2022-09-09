@@ -1,7 +1,9 @@
 <template>
   <header>
     <h5>CHEIRINHO DE PÃO</h5>
-    <NuxtLink to="/login">Login</NuxtLink>
+    <div class="button">
+      <NuxtLink to="/login">Login</NuxtLink>
+    </div>
   </header>
 </template>
 
@@ -22,5 +24,17 @@ header {
   color: #fff;
   height: 80px;
   padding: 0 15px;
+}
+
+.button {
+  background-color: transparent;
+  border: 1px solid rgba(116, 49, 237, 0.61);
+  padding: 5px;
+  border-radius: 8px;
+}
+
+.a {
+  text-decoration: none;
+  color: #fff;
 }
 </style>
