@@ -1,6 +1,7 @@
 <template>
   <header>
     <h5>CHEIRINHO DE PÃO</h5>
+    <NuxtLink to="/login">Login</NuxtLink>
   </header>
 </template>
 
@@ -11,7 +12,7 @@ export default {};
 <style scope>
 header {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   background: linear-gradient(
     94.94deg,
@@ -20,5 +21,6 @@ header {
   );
   color: #fff;
   height: 80px;
+  padding: 0 15px;
 }
 </style>
