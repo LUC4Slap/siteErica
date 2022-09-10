@@ -82,7 +82,7 @@ export default {
         headers: { Authorization: `Bearer ${this.token}` },
       };
       let { data } = await axios.get(
-        `http://localhost:3000/pedidos?inicioData=${this.dataInicial}T00:00:00.000Z&fimData=${this.dataFInal}T20:00:00.000Z`,
+        `https://api-users-pedidos.herokuapp.com/pedidos?inicioData=${this.dataInicial}T00:00:00.000Z&fimData=${this.dataFInal}T20:00:00.000Z`,
         config
       );
       // console.log(data);

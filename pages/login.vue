@@ -1,6 +1,9 @@
 <template>
   <div class="container login">
     <b-form ref="form" @submit.prevent="login">
+      <div class="error" v-if="erro">
+        <b-alert show variant="danger">{{ messageError }}</b-alert>
+      </div>
       <div class="img">
         <b-img
           src="https://arquivos.minhaagendavirtual.com.br/static/app-assets/img/gallery/login.png"
@@ -61,6 +64,8 @@ export default {
       email: "",
       senha: "",
       type: "password",
+      erro: false,
+      messageError: "",
     };
   },
   methods: {
@@ -72,7 +77,7 @@ export default {
 
       try {
         const response = await axios.post(
-          "http://localhost:3000/auth/login",
+          "https://api-users-pedidos.herokuapp.com/auth/login",
           loginAuth
         );
 
@@ -82,9 +87,10 @@ export default {
           name: "painel",
         });
       } catch (error) {
-        this.$router.push({
-          name: "login",
-        });
+        if (error.response.status == 401) {
+          this.erro = true;
+          this.messageError = "E-mail ou senha incorretos";
+        }
       }
     },
     mudarType() {
