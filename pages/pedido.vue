@@ -120,10 +120,19 @@ export default {
         pedido: this.form.food,
         endereco: this.form.endereco,
       };
+      let pedidoSQL = {
+        cliente: this.form.name,
+        email: this.form.email,
+        endereco: this.form.endereco,
+        telefone: this.form.phone,
+        pedido: await this.extractPeidos(this.form.food),
+      };
+      console.log(pedidoSQL);
       let { data } = await axios.post(
         "https://api-email-nest.herokuapp.com/api/v1/email",
         pedido
       );
+      await axios.post("http://localhost:3000/pedidos", pedidoSQL);
       // let { data } = await axios.post("http://localhost:3030/send", pedido);
       if (data.hasOwnProperty("error") && data.erro == true) {
         this.error = data.error;
@@ -149,6 +158,16 @@ export default {
     },
     showAlert() {
       this.dismissCountDown = this.dismissSecs;
+    },
+    extractPeidos(pedidos) {
+      if (pedidos.length > 0) {
+        let newPed = "";
+        pedidos.forEach((element) => {
+          newPed += `${element},`;
+        });
+        return newPed;
+      }
+      return pedidos;
     },
   },
 };

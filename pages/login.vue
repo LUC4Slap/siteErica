@@ -1,7 +1,14 @@
 <template>
-  <div class="container mt-3">
+  <div class="container login">
     <b-form ref="form" @submit.prevent="login">
-      <b-form-group id="input-group-1" label="Email" label-for="input-1">
+      <div class="img">
+        <b-img
+          src="https://arquivos.minhaagendavirtual.com.br/static/app-assets/img/gallery/login.png"
+          fluid
+          alt="Responsive image"
+        ></b-img>
+      </div>
+      <b-form-group id="input-group-1" label-for="input-1">
         <b-input-group class="mb-2">
           <b-input-group-prepend is-text>
             <BIconPersonFill />
@@ -16,15 +23,10 @@
         </b-input-group>
       </b-form-group>
 
-      <b-form-group id="input-group-2" label="Sua Senha:" label-for="input-2">
+      <b-form-group id="input-group-2" label-for="input-2">
         <b-input-group>
           <b-input-group-prepend is-text @click="mudarType">
             <BIconEyeFill />
-            <!-- <div v-if="type == 'password'">
-            </div> -->
-            <!-- <div v-ele-if="type == 'text'">
-              <BIconEyeSlashFill />
-            </div> -->
           </b-input-group-prepend>
 
           <b-form-input
@@ -36,7 +38,7 @@
           ></b-form-input>
         </b-input-group>
       </b-form-group>
-      <b-button type="submit" variant="primary">Logar</b-button>
+      <b-button block type="submit" variant="primary">Logar</b-button>
     </b-form>
   </div>
 </template>
@@ -73,7 +75,9 @@ export default {
           "http://localhost:3000/auth/login",
           loginAuth
         );
+
         this.$store.commit("user/ADD_RESULT_TOKEN", response.data.access_token);
+        await localStorage.setItem("tokem", response.data.access_token);
         this.$router.push({
           name: "painel",
         });
@@ -82,13 +86,6 @@ export default {
           name: "login",
         });
       }
-
-      // if ((err == false && response.status == 201) || response.status == 200) {
-      //   this.$store.commit("user/ADD_RESULT_TOKEN", response.data.access_token);
-      //   this.$router.push({
-      //     name: "painel",
-      //   });
-      // }
     },
     mudarType() {
       if (this.type == "password") {
@@ -101,5 +98,21 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+.login {
+  background-color: rgb(14 36 189 / 50%);
+  display: flex;
+  width: 100%;
+  height: 100vh;
+  align-items: center;
+  justify-content: center;
+}
+
+.img {
+  display: flex;
+  justify-content: center;
+  width: 200px;
+  height: 200px;
+  margin-left: 50px;
+}
 </style>
