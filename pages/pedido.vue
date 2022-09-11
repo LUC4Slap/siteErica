@@ -33,7 +33,7 @@
           id="input-3"
           v-model="form.phone"
           v-mask="['(##) ####-####', '(##) #####-####']"
-          placeholder="Telefone"
+          placeholder="(67) 99999-9999"
           type="text"
           required
         ></b-form-input>
@@ -100,7 +100,10 @@ export default {
         "Cuca de Goiabada",
         "Cuca de Banana",
         "Cuca de Doce de Leite",
-        "Rosca",
+        "Cuca de Amora",
+        "Rosca de Goiabada",
+        "Rosca Meio a Meio (Goiabada com Doce de Leite)",
+        "Rosca Amora",
       ],
       show: true,
       message: null,
