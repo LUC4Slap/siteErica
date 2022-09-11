@@ -132,7 +132,10 @@ export default {
         "https://api-email-nest.herokuapp.com/api/v1/email",
         pedido
       );
-      await axios.post("http://localhost:3000/pedidos", pedidoSQL);
+      await axios.post(
+        "https://api-users-pedidos.herokuapp.com/pedidos",
+        pedidoSQL
+      );
       // let { data } = await axios.post("http://localhost:3030/send", pedido);
       if (data.hasOwnProperty("error") && data.erro == true) {
         this.error = data.error;

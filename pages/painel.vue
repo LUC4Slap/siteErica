@@ -37,13 +37,22 @@
             {{ dataFInal }}
           </h4>
         </div>
-        <b-table
-          striped
-          small
-          dark
-          responsive
-          :items="dadosRelatorio"
-        ></b-table>
+        <div v-if="dadosRelatorio.length > 0">
+          <vue-good-table
+            :columns="columns"
+            :rows="dadosRelatorio"
+            theme="nocturnal"
+            :search-options="{
+              enabled: true,
+            }"
+            :pagination-options="{
+              enabled: true,
+              mode: 'pages',
+              perPageDropdown: [3, 7, 10],
+              dropdownAllowAll: false,
+            }"
+          />
+        </div>
       </main>
     </div>
   </div>
@@ -62,18 +71,37 @@ export default {
       dataFInal: "",
       dadosRelatorio: [],
       pesquisando: false,
+      columns: [
+        {
+          label: "ID",
+          field: "id",
+        },
+        {
+          label: "Nome",
+          field: "cliente",
+        },
+        {
+          label: "Endereço",
+          field: "endereco",
+        },
+        {
+          label: "Data",
+          field: "created_at",
+        },
+        {
+          label: "E-mail",
+          field: "email",
+        },
+        {
+          label: "Telefone",
+          field: "telefone",
+        },
+      ],
     };
   },
-  async beforeCreate() {
-    const token_state =
-      (await this.$store.state.user.token_user) ||
-      (await localStorage.getItem("tokem"));
-    if (!token_state) {
-      this.$router.push({
-        name: "login",
-      });
-    }
-    this.token = token_state;
+  middleware: "auth",
+  async created() {
+    this.token = await localStorage.getItem("tokem");
   },
   methods: {
     async pesquisar() {
@@ -85,7 +113,16 @@ export default {
         `https://api-users-pedidos.herokuapp.com/pedidos?inicioData=${this.dataInicial}T00:00:00.000Z&fimData=${this.dataFInal}T20:00:00.000Z`,
         config
       );
-      // console.log(data);
+      // for (let item of data) {
+      //   const parsed = {
+      //     id: item.id,
+      //     nome: item.cliente,
+      //     endereco: item.id,
+      //     id: item.id,
+      //     id: item.id,
+      //     id: item.id,
+      //   };
+      // }
       this.dadosRelatorio = data;
     },
   },
