@@ -96,6 +96,10 @@ export default {
           label: "Telefone",
           field: "telefone",
         },
+        {
+          label: "Pedido",
+          field: "pedido",
+        },
       ],
     };
   },
