@@ -124,27 +124,20 @@ export default {
         pedido: this.form.food,
         endereco: this.form.endereco,
       };
-      let pedidoSQL = {
-        cliente: this.form.name,
-        email: this.form.email,
-        endereco: this.form.endereco,
-        telefone: this.form.phone,
-        pedido: await this.extractPeidos(this.form.food),
-      };
-      console.log(pedidoSQL);
-      let { data } = await axios.post(
+
+      let response = await axios.post(
         "https://api-email-nest.herokuapp.com/api/v1/email",
         pedido
       );
-      await axios.post(
-        "https://api-users-pedidos.herokuapp.com/pedidos",
-        pedidoSQL
-      );
-      // let { data } = await axios.post("http://localhost:3030/send", pedido);
-      if (data.hasOwnProperty("error") && data.erro == true) {
-        this.error = data.error;
+      console.log(response);
+      if (response.status == 201) {
+        await this.saveTablePedido();
       }
-      this.message = data.message;
+
+      if (response.data.hasOwnProperty("error") && response.data.erro == true) {
+        this.error = response.data.error;
+      }
+      this.message = response.data.message;
       this.onReset();
       this.showAlert();
     },
@@ -176,6 +169,19 @@ export default {
         return newPed;
       }
       return pedidos;
+    },
+    async saveTablePedido() {
+      let pedidoSQL = {
+        cliente: this.form.name,
+        email: this.form.email,
+        endereco: this.form.endereco,
+        telefone: this.form.phone,
+        pedido: await this.extractPeidos(this.form.food),
+      };
+      await axios.post(
+        "https://api-users-pedidos.herokuapp.com/pedidos",
+        pedidoSQL
+      );
     },
   },
 };
