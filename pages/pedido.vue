@@ -150,6 +150,7 @@ export default {
       this.form.email = "";
       this.form.name = "";
       this.form.phone = "";
+      this.form.endereco = "";
       this.form.food = ["Pão"];
       // Trick to reset/clear native browser form validation state
       this.show = false;
