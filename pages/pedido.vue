@@ -27,31 +27,30 @@
       <b-form-group
         id="input-group-3"
         label="Seu Telefone:"
-        label-for="input-2"
+        label-for="input-3"
       >
         <b-form-input
-          id="input-2"
+          id="input-3"
           v-model="form.phone"
-          mask="#####-####"
-          max="999999999"
+          v-mask="['(##) ####-####', '(##) #####-####']"
           placeholder="Telefone"
-          type="number"
+          type="text"
           required
         ></b-form-input>
       </b-form-group>
 
-      <b-form-group id="input-group-2" label="Endereço:" label-for="input-2">
+      <b-form-group id="input-group-4" label="Endereço:" label-for="input-4">
         <b-form-input
-          id="input-2"
+          id="input-4"
           v-model="form.endereco"
           placeholder="Seu Endereço"
           required
         ></b-form-input>
       </b-form-group>
 
-      <b-form-group id="input-group-4" label="Produtos" label-for="input-3">
+      <b-form-group id="input-group-5" label="Produtos" label-for="input-5">
         <b-form-select
-          id="input-3"
+          id="input-5"
           v-model="form.food"
           :options="foods"
           required
@@ -85,6 +84,7 @@
 
 <script>
 import axios from "axios";
+import { mask } from "vue-the-mask";
 export default {
   data() {
     return {
@@ -111,6 +111,7 @@ export default {
       maxNumber: 10,
     };
   },
+  directives: { mask },
   methods: {
     async onSubmit() {
       let pedido = {

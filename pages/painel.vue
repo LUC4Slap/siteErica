@@ -28,7 +28,7 @@
               class="mb-2"
             ></b-form-datepicker>
           </b-form-group>
-          <b-button type="submit" variant="primary">Enviar</b-button>
+          <b-button type="submit" block variant="primary">Buscar</b-button>
         </b-form>
         <hr />
         <div class="messageData">
@@ -117,16 +117,6 @@ export default {
         `https://api-users-pedidos.herokuapp.com/pedidos?inicioData=${this.dataInicial}T00:00:00.000Z&fimData=${this.dataFInal}T20:00:00.000Z`,
         config
       );
-      // for (let item of data) {
-      //   const parsed = {
-      //     id: item.id,
-      //     nome: item.cliente,
-      //     endereco: item.id,
-      //     id: item.id,
-      //     id: item.id,
-      //     id: item.id,
-      //   };
-      // }
       this.dadosRelatorio = data;
     },
   },
